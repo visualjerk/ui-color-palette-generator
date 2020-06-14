@@ -33,10 +33,10 @@ class App extends React.Component {
         <Box p={4}>
           <Box mb={4}>
             <Text mb={2} as="h1">
-              Theme UI Theme Creator
+              UI Color Palette Generator
             </Text>
             <Text mb={4} as="p">
-              Create, preview and export themes for{' '}
+              Create and preview accessible color palettes. Export them to{' '}
               <Link href="https://theme-ui.com/" target="_blank">
                 Theme UI
               </Link>{' '}
