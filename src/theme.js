@@ -1,4 +1,6 @@
-export default {
+const STORAGE_NAME = 'USER_THEME'
+
+export const defaultTheme = {
   breakpoints: ['40em', '52em', '64em'],
   space: [0, 4, 8, 16, 24, 32, 48, 64, 128, 256, 512],
   sizes: [12, 16, 20, 24, 32, 48, 64, 128, 256, 480, 640, 800, 1024],
@@ -113,4 +115,13 @@ export default {
       borderBottomStyle: 'solid',
     },
   },
+}
+
+export function getTheme() {
+  const theme = localStorage.getItem(STORAGE_NAME)
+  return theme ? JSON.parse(theme) : defaultTheme
+}
+
+export function setTheme(theme) {
+  localStorage.setItem(STORAGE_NAME, JSON.stringify(theme))
 }
