@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/ui-color-palette-generator/static/js/main.c9621bd0.chunk.js",
+    "main.js.map": "/ui-color-palette-generator/static/js/main.c9621bd0.chunk.js.map",
+    "runtime-main.js": "/ui-color-palette-generator/static/js/runtime-main.18112e4d.js",
+    "runtime-main.js.map": "/ui-color-palette-generator/static/js/runtime-main.18112e4d.js.map",
+    "static/js/2.1524ab37.chunk.js": "/ui-color-palette-generator/static/js/2.1524ab37.chunk.js",
+    "static/js/2.1524ab37.chunk.js.map": "/ui-color-palette-generator/static/js/2.1524ab37.chunk.js.map",
+    "index.html": "/ui-color-palette-generator/index.html",
+    "precache-manifest.3cb18c0e05743efc95d41ddaf7d9efb5.js": "/ui-color-palette-generator/precache-manifest.3cb18c0e05743efc95d41ddaf7d9efb5.js",
+    "service-worker.js": "/ui-color-palette-generator/service-worker.js",
+    "static/js/2.1524ab37.chunk.js.LICENSE.txt": "/ui-color-palette-generator/static/js/2.1524ab37.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.18112e4d.js",
+    "static/js/2.1524ab37.chunk.js",
+    "static/js/main.c9621bd0.chunk.js"
+  ]
+}
