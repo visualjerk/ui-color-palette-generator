@@ -1,10 +1,13 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui'
 import React from 'react'
-import { ThemeProvider, Box, Text, Link } from 'theme-ui'
+import { ThemeProvider, Grid, Box, Text, Link } from 'theme-ui'
 import theme from './theme'
 import ExampleBox from './components/ExampleBox'
 import ExampleLogin from './components/ExampleLogin'
+import ExampleDashboard from './components/ExampleDashboard'
+import ColorTile from './components/ColorTile'
+import { debounce } from 'lodash'
 
 class App extends React.Component {
   constructor(props) {
@@ -12,14 +15,16 @@ class App extends React.Component {
     this.state = {
       theme,
     }
-
-    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange(event) {
+  updateColor = debounce((key, value) => {
     const newTheme = { ...this.state.theme }
-    newTheme.colors.primary = event.target.value
+    newTheme.colors[key] = value
     this.setState({ theme: newTheme })
+  }, 200)
+
+  debouncedUpdateColor = (key) => (event) => {
+    this.updateColor(key, event.target.value)
   }
 
   render() {
@@ -41,12 +46,22 @@ class App extends React.Component {
               </Link>
               .
             </Text>
-            <input
-              type="color"
-              value={this.state.theme.colors.primary}
-              onChange={this.handleChange}
-            />
+            <Grid gap={4} width={[128, 128, 128]}>
+              {Object.entries(this.state.theme.colors).map(
+                ([key, value], index) => (
+                  <ColorTile
+                    key={index}
+                    color={value}
+                    name={key}
+                    onChange={this.debouncedUpdateColor(key)}
+                  ></ColorTile>
+                )
+              )}
+            </Grid>
           </Box>
+          <ExampleBox title="Dashboard">
+            <ExampleDashboard />
+          </ExampleBox>
           <ExampleBox title="Login Form">
             <ExampleLogin />
           </ExampleBox>

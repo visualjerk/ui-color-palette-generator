@@ -1,20 +1,13 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui'
-import { darken, lighten } from '@theme-ui/color'
-import {
-  Box,
-  Label,
-  Input,
-  Button,
-  Flex,
-  Text,
-  Heading,
-  Checkbox,
-} from 'theme-ui'
+import { Box, Label, Input, Button, Flex, Heading, Checkbox } from 'theme-ui'
 
 function ExampleLogin() {
   return (
-    <Flex sx={{ justifyContent: 'center' }} p={6}>
+    <Flex
+      sx={{ justifyContent: 'center', alignItems: 'center', height: 10 }}
+      p={6}
+    >
       <Box
         as="form"
         onSubmit={(e) => e.preventDefault()}

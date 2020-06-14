@@ -9,7 +9,9 @@ function ExampleBox(props) {
       sx={{
         borderRadius: 'small',
         boxShadow: 3,
+        marginBottom: 6,
         backgroundColor: 'background',
+        overflow: 'hidden',
       }}
     >
       <Flex

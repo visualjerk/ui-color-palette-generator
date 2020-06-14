@@ -35,6 +35,18 @@ export default {
       fontWeight: 'heading',
     },
   },
+  links: {
+    nav: {
+      color: 'text',
+      px: 2,
+      py: 2,
+      display: 'flex',
+      alignItems: 'center',
+      '&:hover': {
+        bg: 'highlight',
+      },
+    },
+  },
   shadows: [
     '0 1px 2px 0 rgba(0,0,0,0.3)',
     '0 1px 2px 0 rgba(0,0,0,0.1), 0 1px 4px 0 rgba(0,0,0,0.2)',
