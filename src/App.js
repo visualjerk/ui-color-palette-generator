@@ -23,11 +23,12 @@ class App extends React.Component {
     super(props)
     this.state = {
       theme: getTheme(),
+      textareaColors: getTheme().colors,
     }
   }
 
   setTheme = (theme) => {
-    this.setState({ theme })
+    this.setState({ theme, textareaColors: theme.colors })
     setTheme(theme)
   }
 
@@ -37,10 +38,14 @@ class App extends React.Component {
 
   updateColors = (event) => {
     event.preventDefault()
-    const colors = JSON.parse(event.target.querySelector('textarea').value)
     const theme = cloneDeep(this.state.theme)
-    theme.colors = colors
+    theme.colors = this.state.textareaColors
     this.setTheme(theme)
+  }
+
+  setTextareaColors = (event) => {
+    const colors = JSON.parse(event.target.value)
+    this.setState({ textareaColors: colors })
   }
 
   updateColor = debounce((key, value) => {
@@ -96,11 +101,8 @@ class App extends React.Component {
                 <form onSubmit={this.updateColors}>
                   <Textarea
                     rows={11}
-                    defaultValue={JSON.stringify(
-                      this.state.theme.colors,
-                      null,
-                      2
-                    )}
+                    value={JSON.stringify(this.state.textareaColors, null, 2)}
+                    onChange={this.setTextareaColors}
                     bg="muted"
                     mb="3"
                     sx={{ backgroundColor: 'background' }}
