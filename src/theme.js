@@ -60,6 +60,16 @@ export const defaultTheme = {
     rounded: '2em',
     circle: '50%',
   },
+  buttons: {
+    primary: {
+      color: 'background',
+      bg: 'primary',
+    },
+    muted: {
+      color: 'text',
+      bg: 'background',
+    },
+  },
   styles: {
     root: {
       fontFamily: 'body',

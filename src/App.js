@@ -26,16 +26,27 @@ class App extends React.Component {
     }
   }
 
+  setTheme = (theme) => {
+    this.setState({ theme })
+    setTheme(theme)
+  }
+
   resetTheme = () => {
-    this.setState({ theme: defaultTheme })
-    setTheme(defaultTheme)
+    this.setTheme(defaultTheme)
+  }
+
+  updateColors = (event) => {
+    event.preventDefault()
+    const colors = JSON.parse(event.target.querySelector('textarea').value)
+    const theme = cloneDeep(this.state.theme)
+    theme.colors = colors
+    this.setTheme(theme)
   }
 
   updateColor = debounce((key, value) => {
     const theme = cloneDeep(this.state.theme)
     theme.colors[key] = value
-    this.setState({ theme })
-    setTheme(theme)
+    this.setTheme(theme)
   }, 200)
 
   debouncedUpdateColor = (key) => (event) => {
@@ -82,15 +93,27 @@ class App extends React.Component {
                 )}
               </Grid>
               <Box sx={{ width: 8, borderRadius: 'small' }} p={3} bg="muted">
-                <Textarea
-                  rows={11}
-                  value={JSON.stringify(this.state.theme.colors, null, 2)}
-                  readOnly
-                  bg="muted"
-                  mb="3"
-                  sx={{ backgroundColor: 'background' }}
-                />
-                <Button sx={{ width: '100%' }} onClick={this.resetTheme}>
+                <form onSubmit={this.updateColors}>
+                  <Textarea
+                    rows={11}
+                    defaultValue={JSON.stringify(
+                      this.state.theme.colors,
+                      null,
+                      2
+                    )}
+                    bg="muted"
+                    mb="3"
+                    sx={{ backgroundColor: 'background' }}
+                  />
+                  <Button sx={{ width: '100%' }} mb={2}>
+                    Update Theme
+                  </Button>
+                </form>
+                <Button
+                  variant="muted"
+                  sx={{ width: '100%' }}
+                  onClick={this.resetTheme}
+                >
                   Reset Theme
                 </Button>
               </Box>
