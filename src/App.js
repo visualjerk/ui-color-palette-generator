@@ -11,7 +11,8 @@ import {
   Textarea,
   Button,
 } from 'theme-ui'
-import { getTheme, setTheme, defaultTheme } from './theme'
+import { buildTheme } from './theme'
+import { getSettings, setSettings } from './settings'
 import ExampleBox from './components/ExampleBox'
 import ExampleLogin from './components/ExampleLogin'
 import ExampleDashboard from './components/ExampleDashboard'
@@ -22,36 +23,30 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: getTheme(),
-      textareaColors: getTheme().colors,
+      settings: getSettings(),
+      theme: buildTheme(),
     }
   }
 
-  setTheme = (theme) => {
-    this.setState({ theme, textareaColors: theme.colors })
-    setTheme(theme)
+  setSettings = (settings) => {
+    setSettings(settings)
+    const newTheme = buildTheme()
+    this.setState({
+      settings,
+      theme: newTheme,
+    })
   }
 
-  resetTheme = () => {
-    this.setTheme(defaultTheme)
-  }
-
-  updateColors = (event) => {
-    event.preventDefault()
-    const theme = cloneDeep(this.state.theme)
-    theme.colors = this.state.textareaColors
-    this.setTheme(theme)
-  }
-
-  setTextareaColors = (event) => {
-    const colors = JSON.parse(event.target.value)
-    this.setState({ textareaColors: colors })
-  }
+  // resetTheme = () => {
+  //   this.setTheme(defaultTheme)
+  // }
 
   updateColor = debounce((key, value) => {
-    const theme = cloneDeep(this.state.theme)
-    theme.colors[key] = value
-    this.setTheme(theme)
+    const colors = cloneDeep(this.state.settings.colors)
+    colors[key] = value
+    this.setSettings({
+      colors,
+    })
   }, 200)
 
   debouncedUpdateColor = (key) => (event) => {
@@ -86,7 +81,7 @@ class App extends React.Component {
                   flexGrow: 1,
                 }}
               >
-                {Object.entries(this.state.theme.colors).map(
+                {Object.entries(this.state.settings.colors).map(
                   ([key, value], index) => (
                     <ColorTile
                       key={index}
@@ -101,14 +96,14 @@ class App extends React.Component {
                 <form onSubmit={this.updateColors}>
                   <Textarea
                     rows={11}
-                    value={JSON.stringify(this.state.textareaColors, null, 2)}
-                    onChange={this.setTextareaColors}
+                    value={JSON.stringify(this.state.theme.colors, null, 2)}
+                    readonly
                     bg="muted"
                     mb="3"
                     sx={{ backgroundColor: 'background' }}
                   />
                   <Button sx={{ width: '100%' }} mb={2}>
-                    Update Theme
+                    Copy Theme
                   </Button>
                 </form>
                 <Button

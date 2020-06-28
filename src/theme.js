@@ -1,6 +1,7 @@
-const STORAGE_NAME = 'USER_THEME'
+import { getSettings } from './settings'
+import { getNamedShades } from './utils/color'
 
-export const defaultTheme = {
+const baseTheme = {
   breakpoints: ['40em', '52em', '64em'],
   space: [0, 4, 8, 16, 24, 32, 48, 64, 128, 256, 512],
   sizes: [12, 16, 20, 24, 32, 48, 64, 128, 256, 480, 640, 800, 1024],
@@ -127,11 +128,36 @@ export const defaultTheme = {
   },
 }
 
-export function getTheme() {
-  const theme = localStorage.getItem(STORAGE_NAME)
-  return theme ? JSON.parse(theme) : defaultTheme
-}
+export function buildTheme() {
+  const settings = getSettings()
+  let baseColors = {}
 
-export function setTheme(theme) {
-  localStorage.setItem(STORAGE_NAME, JSON.stringify(theme))
+  Object.entries(settings.colors).forEach(([name, color]) => {
+    const shades = getNamedShades(name, color)
+    baseColors = {
+      ...baseColors,
+      ...shades,
+    }
+  })
+
+  const colorChoices = {
+    text: baseColors.neutral90,
+    background: baseColors.neutral0,
+    primary: baseColors.primary50,
+    secondary: baseColors.secondary50,
+    muted: baseColors.neutral10,
+    highlight: baseColors.highlight10,
+    grey: baseColors.neutral50,
+    accent: baseColors.accent50,
+  }
+
+  const colors = {
+    ...baseColors,
+    ...colorChoices,
+  }
+
+  return {
+    ...baseTheme,
+    colors,
+  }
 }
