@@ -6,7 +6,7 @@ import { getContrastTextColor } from '../utils/color'
 
 function ColorTile(props) {
   const shades = getNamedShades(props.name, props.color)
-  const darkText = shades[`${props.name}90`]
+  const darkText = shades[`${props.name}100`]
   const lightText = shades[`${props.name}0`]
 
   return (

@@ -141,14 +141,14 @@ export function buildTheme() {
   })
 
   const colorChoices = {
-    text: baseColors.neutral90,
+    text: baseColors.neutral95,
     background: baseColors.neutral0,
-    primary: baseColors.primary50,
-    secondary: baseColors.secondary50,
-    muted: baseColors.neutral10,
+    muted: baseColors.neutral5,
+    primary: baseColors.primary60,
+    secondary: baseColors.secondary60,
     highlight: baseColors.highlight10,
     grey: baseColors.neutral50,
-    accent: baseColors.accent50,
+    accent: baseColors.accent60,
   }
 
   const colors = {

@@ -1,43 +1,40 @@
 import chroma from 'chroma-js'
 
+const shadeSteps = [0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 85, 90, 95, 100]
+
 export function getShades(color) {
   const base = chroma(color)
   const baseL = base.get('hsl.l')
 
-  const lightVariantCount = Math.floor((1 - baseL) * 10)
-  const darkVariantCount = 10 - lightVariantCount
+  const lightL = 0.97
+  const darkL = 0.14
 
-  const variants = [color]
+  const lightBase = base.set('hsl.l', lightL)
+  const darkBase = base.set('hsl.l', darkL)
 
-  if (lightVariantCount > 0) {
-    const lightBase = base.set('hsl.l', 0.97)
-    const lightVariants = chroma
-      .scale([lightBase, base])
-      .mode('hsl')
-      .correctLightness()
-      .colors(lightVariantCount + 1)
-    lightVariants.pop()
-    variants.unshift(...lightVariants)
+  let scale
+  if (baseL >= lightL) {
+    scale = chroma.scale([base, darkBase]).domain([0, 100])
+  } else if (baseL <= darkL) {
+    scale = chroma.scale([lightBase, base]).domain([0, 100])
+  } else {
+    const baseDomain = 100 - Math.round(baseL * 10) * 10
+    scale = chroma
+      .scale([lightBase, base, darkBase])
+      .domain([0, baseDomain, 100])
   }
 
-  if (darkVariantCount > 0) {
-    const darkBase = base.set('hsl.l', 0.12)
-    const darkVariants = chroma
-      .scale([base, darkBase])
-      .mode('hsl')
-      .correctLightness()
-      .colors(darkVariantCount + 1)
-    darkVariants.shift()
-    variants.push(...darkVariants)
-  }
+  const shades = scale.mode('hsl')
+  // .correctLightness()
+  // .classes(shadeSteps)
 
-  return variants
+  return shadeSteps.map((step) => shades(step).hex())
 }
 
 export function getNamedShades(name, color) {
   const shades = getShades(color)
   return shades.reduce((namedShades, shade, index) => {
-    namedShades[`${name}${index * 10}`] = shade
+    namedShades[`${name}${shadeSteps[index]}`] = shade
     return namedShades
   }, {})
 }
